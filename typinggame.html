@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>タイピングゲーム</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+    }
+    #game-container {
+      margin: 0 auto;
+      width: 400px;
+      padding: 20px;
+      border: 1px solid #ccc;
+      background-color: #f9f9f9;
+    }
+    #word-display {
+      font-size: 24px;
+      margin-bottom: 10px;
+    }
+    #input-box {
+      font-size: 18px;
+      padding: 5px;
+      width: 100%;
+    }
+  </style>
+</head>
+<body>
+  <h1>タイピングゲーム</h1>
+  <div id="game-container">
+    <p id="word-display">タイピングゲームを始めるにはEnterキーを押してください。</p>
+    <input type="text" id="input-box" disabled>
+    <p id="message"></p>
+  </div>
+
+  <script>
+    const words = ["こんにちは", "プログラミング", "タイピング", "OpenAI", "ゲーム"];
+    let currentWordIndex = 0;
+    let score = 0;
+
+    document.getElementById('input-box').addEventListener('keydown', function(event) {
+      if (event.key === 'Enter') {
+        const inputBox = document.getElementById('input-box');
+        const typedWord = inputBox.value.trim();
+        const currentWord = words[currentWordIndex];
+
+        if (typedWord === currentWord) {
+          score++;
+          document.getElementById('message').textContent = '正解！';
+        } else {
+          document.getElementById('message').textContent = '不正解';
+        }
+
+        inputBox.value = '';
+        currentWordIndex = (currentWordIndex + 1) % words.length;
+        document.getElementById('word-display').textContent = words[currentWordIndex];
+      }
+    });
+
+    // ゲームを開始する
+    document.addEventListener('keydown', function(event) {
+      if (event.key === 'Enter') {
+        document.getElementById('input-box').removeAttribute('disabled');
+        document.getElementById('word-display').textContent = words[currentWordIndex];
+      }
+    });
+  </script>
+</body>
+</html>
